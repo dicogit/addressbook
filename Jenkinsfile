@@ -32,7 +32,7 @@ pipeline {
                 message "Choose Version"
                 ok "Version chosen"
                 parameters {
-                    choice(name:"version" choices:[10,20,30])
+                    choice(name:"version" ,choices:[10,20,30])
                 }
             }
             steps {
