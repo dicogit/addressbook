@@ -18,7 +18,7 @@ pipeline {
             steps {
                 script {
                     echo "Compile the code"
-                    echo "${params.LIVE_ENV}"
+                //    echo "${params.LIVE_ENV}"
                     sh "mvn compile"
                 }
             }
