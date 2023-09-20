@@ -44,6 +44,7 @@ pipeline {
             }
         }
         stage ('Package') {
+            agent any
            // agent { label 'slave1'}
            // input {
            //     message "Choose Version"
