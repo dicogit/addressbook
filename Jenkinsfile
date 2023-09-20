@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        jdk 'java8'
+    }
     parameters { 
         string(name:'LIVE_ENV', defaultValue:'platform', description: 'pipe lie testing') 
         booleanParam(name: 'C_BUILD', defaultValue: true, description: 'pass execute')
