@@ -12,6 +12,6 @@ else
     cd /home/ec2-user/addressbook
     git checkout pipe
 fi
-#cd /home/ec2-user/addressbook
+cd /home/ec2-user/addressbook
 mvn package
 
