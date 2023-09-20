@@ -2,6 +2,7 @@ pipeline {
     agent none
     tools {
         jdk 'java8'
+        maven 'slave-mvn'
     }
     parameters { 
         string(name:'LIVE_ENV', defaultValue:'platform', description: 'pipe lie testing') 
