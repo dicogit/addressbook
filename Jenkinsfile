@@ -5,7 +5,6 @@ pipeline {
             steps {
                 script {
                     echo "Compile the code"
-
                 }
             }
         }
@@ -20,7 +19,6 @@ pipeline {
             steps {
                 script {
                     echo "Package the code"
-
                 }
             }
         }
