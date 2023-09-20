@@ -11,6 +11,7 @@ pipeline {
                 script {
                     echo "Compile the code"
                     echo "${params.LIVE_ENV}"
+                    sh "mvn compile"
                 }
             }
         }
@@ -24,6 +25,7 @@ pipeline {
                 script {
                     
                     echo "Test the code"
+                    sh "mvn test"
                 }
             }
         }
@@ -39,6 +41,7 @@ pipeline {
                 script {
                     echo "Package the code"
                     echo "Platform VERSION : ${params.VERSION}"
+                    sh "mvn package"
                 }
             }
         }
