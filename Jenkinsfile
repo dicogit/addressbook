@@ -1,5 +1,5 @@
 pipeline {
-    agent any
+    agent none
     tools {
         jdk 'java8'
     }
@@ -10,6 +10,7 @@ pipeline {
         }
     stages {
         stage ('Compile') {
+            agent any
             steps {
                 script {
                     echo "Compile the code"
@@ -19,6 +20,7 @@ pipeline {
             }
         }
         stage ('Unittest') {
+            agent any
             when {
                     expression {
                             params.C_BUILD == true
@@ -33,6 +35,7 @@ pipeline {
             }
         }
         stage ('Package') {
+            agent { label 'slave1'}
             input {
                 message "Choose Version"
                 ok "Version chosen"
