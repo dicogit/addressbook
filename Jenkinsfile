@@ -16,7 +16,7 @@ pipeline {
         }
         stage ('Unittest') {
             when {
-                    ecpression {
+                    expression {
                             params.C_BUILD == true
                         }
                     }
