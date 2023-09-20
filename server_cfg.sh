@@ -9,7 +9,9 @@ then
     git pull origin pipe
 else
     git clone https://github.com/dicogit/addressbook.git
+    cd /home/ec2-user/addressbook
+    git checkout pipe
 fi
-cd /home/ec2-user/addressbook
+#cd /home/ec2-user/addressbook
 mvn package
 
