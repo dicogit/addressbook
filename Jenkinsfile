@@ -9,9 +9,9 @@ pipeline {
       // booleanParam(name: 'C_BUILD', defaultValue: true, description: 'pass execute')
       //choice(name: 'VERSION', choices: ['RHCE_8', 'RHCE_9', 'RHCE_10'], description: 'Environment Version')
       //}
-      environment {
+    environment {
         slave2='ec2-user@3.108.63.216'
-      }
+    }
     stages {
         stage ('Compile') {
             agent any
@@ -24,7 +24,7 @@ pipeline {
             }
         }
         stage ('Unittest') {
-            agent any
+            agent { label 'slave1'}
            // when {
            //         expression {
            //                 params.C_BUILD == true
@@ -44,14 +44,13 @@ pipeline {
             }
         }
         stage ('Package') {
-            agent { label 'slave1'}
+           // agent { label 'slave1'}
            // input {
            //     message "Choose Version"
            //     ok "Version chosen"
            //     parameters {
            //         choice(name:"version" ,choices:[10,20,30])
             //    }
-            }
             steps {
                 script {
                     sshagent(['AGENT_ID']) {
@@ -59,7 +58,6 @@ pipeline {
                    // echo "Platform VERSION : ${params.VERSION}"
                         sh "scp -o StrictHostKeyChecking=no server_cfg.sh ${slave2}:/home/ec2-user"
                         sh "ssh -o StrictHostKeyChecking=no ${slave2} 'bash ~/server_cfg.sh'"
-
                     }
                     
                 }
