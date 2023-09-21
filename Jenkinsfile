@@ -10,7 +10,7 @@ pipeline {
       //choice(name: 'VERSION', choices: ['RHCE_8', 'RHCE_9', 'RHCE_10'], description: 'Environment Version')
       //}
     environment {
-        slave2='ec2-user@3.108.63.216'
+        slave2='ec2-user@3.110.176.197'
     }
     stages {
         stage ('Compile') {
