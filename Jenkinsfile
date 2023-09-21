@@ -2,7 +2,7 @@ pipeline {
     agent none
     tools {
         //jdk 'java8'
-        maven 'slave-mvn'
+        //maven 'slave-mvn'
     }
     //parameters { 
       //   string(name:'LIVE_ENV', defaultValue:'platform', description: 'pipe lie testing') 
@@ -59,6 +59,7 @@ pipeline {
                    // echo "Platform VERSION : ${params.VERSION}"
                         sh "scp -o StrictHostKeyChecking=no server_cfg.sh ${slave2}:/home/ec2-user"
                         sh "ssh -o StrictHostKeyChecking=no ${slave2} 'bash ~/server_cfg.sh'"
+
                     }
                     
                 }
