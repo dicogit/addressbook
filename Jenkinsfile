@@ -1,7 +1,7 @@
 pipeline {
     agent none
     tools {
-        jdk 'java8'
+        //jdk 'java8'
         maven 'slave-mvn'
     }
     //parameters { 
