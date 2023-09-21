@@ -1,9 +1,9 @@
 pipeline {
     agent none
-   // tools {
+    tools {
         //jdk 'java8'
-        //maven 'slave-mvn'
-    //}
+        maven 'slave-mvn'
+    }
     //parameters { 
       //   string(name:'LIVE_ENV', defaultValue:'platform', description: 'pipe lie testing') 
       // booleanParam(name: 'C_BUILD', defaultValue: true, description: 'pass execute')
