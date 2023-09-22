@@ -16,6 +16,7 @@ pipeline {
         //    }
         //}
         stage ('Test') {
+			agent {label 'slave1'}
             //when {
             //        expression {
             //            params.polar == true
