@@ -1,9 +1,9 @@
 pipeline {
     agent none
-	//tools {
-	//	jdk 'java8'
-	//	maven 'slave-mvn'
-	//}
+	tools {
+		jdk 'java8'
+		maven 'slave-mvn'
+	}
 	//environment {
 	//	slave2_ip='ec2-user@3.109.108.101'
 	//}
