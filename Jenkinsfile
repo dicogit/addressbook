@@ -43,6 +43,7 @@ pipeline {
 		//	}
         //}
         stage ('Package') {
+			agent any
 			steps {
                 script {
 					sshagent(['slave2-agent']) {
