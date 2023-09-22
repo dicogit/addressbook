@@ -4,9 +4,9 @@ pipeline {
 		jdk 'java8'
 		maven 'slave-mvn'
 	}
-	//environment {
-	//	slave2_ip='ec2-user@3.109.108.101'
-	//}
+	environment {
+		slave2_ip="ec2-user@3.109.108.101"
+	}
     //parameters{
     //    string(name:'Env',defaultValue:'LINUX',description:'New Project')
     //    booleanParam(name:'polar',defaultValue:true,description:'Polarization')
@@ -43,20 +43,20 @@ pipeline {
 		//	
 		//	}
         //}
-        //stage ('Package') {
-		//	agent any
-		//	steps {
-        //        script {
-		//			sshagent(['slave2-agent']) {
-        //            echo "Welcome to Package stage"
-        //            //echo "The Version is ${params.poll}"
-		//			sh "scp -o StrictHostKeyChecking=no server_cfg.sh ${slave2_ip}:/home/ec2-user"
-		//			sh "ssh -o StrictHostKeyChecking=no ${slave2_ip} 'bash ~/server_cfg.sh'"
-		//			}
-        //        }
-        //        
-        //    }
-        //}
+        stage ('Package') {
+			agent any
+			steps {
+                script {
+					sshagent(['slave2-agent']) {
+                    echo "Welcome to Package stage"
+                    //echo "The Version is ${params.poll}"
+					sh "scp -o StrictHostKeyChecking=no server_cfg.sh ${slave2_ip}:/home/ec2-user"
+					sh "ssh -o StrictHostKeyChecking=no ${slave2_ip} 'bash ~/server_cfg.sh'"
+					}
+                }
+                
+            }
+        }
         //stage ('Deploy') {
         //    input {
         //        message 'Approve'
@@ -69,15 +69,15 @@ pipeline {
         //        
         //    }
         //}
-		stage ('Package2') {
-			agent any
-				steps {
-					script {
-						echo "Welcome to Deploy stage"
-					  sh 'mvn package'
-				}
-					
-			}
-        }
+		//stage ('Package2') {
+		//	agent any
+		//		steps {
+		//			script {
+		//				echo "Welcome to Deploy stage"
+		//			  sh 'mvn package'
+		//		}
+		//			
+		//	}
+        //}
     }
 }
