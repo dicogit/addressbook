@@ -1,5 +1,8 @@
 pipeline {
-    agent any
+    agent none
+	tools {
+		maven 'slave-mvn'
+	}
     //parameters{
     //    string(name:'Env',defaultValue:'LINUX',description:'New Project')
     //    booleanParam(name:'polar',defaultValue:true,description:'Polarization')
