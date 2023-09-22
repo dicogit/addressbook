@@ -13,5 +13,5 @@ else
     git checkout pipe
 fi
 #cd /home/ec2-user/addressbook
-mvn test
+mvn package
 
