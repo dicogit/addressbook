@@ -1,6 +1,7 @@
 pipeline {
     agent none
 	tools {
+		jdk 'java8'
 		maven 'slave-mvn'
 	}
 	environment {
