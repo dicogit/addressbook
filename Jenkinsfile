@@ -6,28 +6,35 @@ pipeline {
     //    choice(name:'poll',choices:[5.5,6.0,6.5],description:'choose version')
     //}
     stages {
-        stage ('Build') {
-            steps {
-                script {
-                    echo "Welcome to Build stage of ${params.Env}"
-					sh 'mvn compile'
-                }
-                
-            }
-        }
-        ////stage ('Test') {
-        //    when {
-        //            expression {
-        //                params.polar == true
-        //            }
-        //        }
+        //stage ('Build') {
         //    steps {
         //        script {
-        //            echo "Welcome to Test stage"
+        //            echo "Welcome to Build stage of ${params.Env}"
+		//			  sh 'mvn compile'
         //        }
         //        
         //    }
         //}
+        stage ('Test') {
+            //when {
+            //        expression {
+            //            params.polar == true
+            //        }
+            //    }
+            steps {
+                script {
+                    echo "Welcome to Test stage"
+					sh 'mvn test'
+                }
+			            
+            }
+			post {
+				always {
+					junit '/target/surefire-reports/*.xml'
+				}
+			
+			}
+        }
         //stage ('Package') {
         //    steps {
         //        script {
