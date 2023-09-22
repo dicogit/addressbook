@@ -1,12 +1,12 @@
 pipeline {
-    agent none
-	tools {
-		jdk 'java8'
-		maven 'slave-mvn'
-	}
-	environment {
-		slave2_ip='ec2-user@3.109.108.101'
-	}
+    //agent none
+	//tools {
+	//	jdk 'java8'
+	//	maven 'slave-mvn'
+	//}
+	//environment {
+	//	slave2_ip='ec2-user@3.109.108.101'
+	//}
     //parameters{
     //    string(name:'Env',defaultValue:'LINUX',description:'New Project')
     //    booleanParam(name:'polar',defaultValue:true,description:'Polarization')
