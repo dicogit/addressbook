@@ -1,0 +1,23 @@
+pipeline {
+    agent {
+        label 'worker1'
+    }
+    tools {
+        maven 'slave'
+    }
+    parameters {
+        string(name:'Env', defaultValue:'Linux', description:"Linu Environment")
+        booleanParam(name:'polar', defaultValue:true, description: 'contional')
+        choice(name:'poll', choices:[7,8,9], description:'choose')
+    }
+    stages {
+        stage ('Compile') {
+            steps { 
+                script {
+                    echo "Welcome to COMPILE STAGE : ${param.Env}"
+                    sh 'mvn compile'
+                }
+            }
+        }
+    }
+}
