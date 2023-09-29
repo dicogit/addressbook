@@ -13,5 +13,6 @@ else
     git checkout pipe
 fi
 sudo cd /home/ec2-user/addressbook
+git checkout pipe
 sudo mvn package
 
