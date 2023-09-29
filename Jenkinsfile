@@ -8,7 +8,7 @@ pipeline {
     }
     parameters {
         string (name:'Env', defaultValue:'Linux', description:'Linux Env')
-        booleanParametrs(name:'polar', defaultValue:true, description:'conditional')
+        booleanParam(name:'polar', defaultValue:true, description:'conditional')
         choice(name:'poll', choices:[7,8,9], description:'selection')
     }
     stages {
