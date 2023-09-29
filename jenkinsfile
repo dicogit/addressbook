@@ -20,24 +20,22 @@ pipeline {
         //    }
         //}
         stage ('Test') {
-            steps { 
-                when {
+            when {
                     expression {
                         params.polar == true
                     }
-                }
+            }   
+            steps { 
                 script {
                     echo "Welcome to TEST STAGE : ${params.Env}"
                     sh 'mvn test'
                 }
             }
-        }
-    post {
-        always {
-            junit 'target/surefire-reports/*.xml'
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
             }
         }
-
     }
-        
 }
