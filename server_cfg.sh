@@ -7,6 +7,7 @@ then
     echo "clone exist"
     cd /home/ec2-user/addressbook
     git pull origin pipe
+    git checkout pipe
 else
     git clone https://github.com/dicogit/addressbook.git
     cd /home/ec2-user/addressbook
