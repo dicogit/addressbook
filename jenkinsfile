@@ -52,8 +52,8 @@ pipeline{
                     sshagent(['remoteuser']) {
                     //echo "Package the Code"
                     //echo "Packing the code version ${params.APPVERSION}"
-                    sh "scp -o StrictHostKeyChecking=no server-config.sh ${remote1}:/home/ec2-user"
-                    sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash ~/server-config.sh'"
+                    sh "scp -o StrictHostKeyChecking=no server_cfg.sh ${remote1}:/home/ec2-user"
+                    sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash ~/server_cfg.sh'"
                      }
                 }
             }
