@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'worker1'
-    }
+    agent none
     tools {
         maven 'slave'
     }
@@ -20,6 +18,9 @@ pipeline {
         //    }
         //}
         stage ('Test') {
+            agent {
+                label 'worker1'
+                }
             when {
                     expression {
                         params.polar == true
