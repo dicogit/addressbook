@@ -1,18 +1,17 @@
 pipeline{
     agent none
-
     tools{
         jdk 'java8'
         maven 'slave'
     }
-    // parameters{
-    //     string(name:'Env',defaultValue:'Test',description:'env to deploy')
-    //     booleanParam(name:'executeTests',defaultValue: true,description:'decide to run tc')
-    //     choice(name:'APPVERSION',choices:['1.1','1.2','1.3'])
-    // }
     environment {
-        remote1="ec2-user@65.1.134.187"
+        remote1="ec2-user@65.1.94.247"
     }
+    parameters{
+         string(name:'Env',defaultValue:'Test',description:'env to deploy')
+         booleanParam(name:'executeTests',defaultValue: true,description:'decide to run tc')
+         choice(name:'APPVERSION',choices:['1.1','1.2','1.3'])
+    } 
 
     stages{
         stage('compile'){
@@ -20,21 +19,20 @@ pipeline{
             steps{
                 script{
                    echo "Compile the Code"
-                    //echo "Deploying to env: ${params.Env}"
+                    echo "Deploying to env: ${params.Env}"
                     sh "mvn compile"
                 }
             }
         }
         stage('UnitTest'){
-             agent any
-            //agent any
-            // when{
-            //     expression{
-            //         params.executeTests == true
-            //     }
-            // }
-            steps{
-                script{
+            agent any
+            when {
+                expression{
+                    params.executeTests == true
+                }
+            }
+            steps {
+                script {
                     echo "Run the UnitTest Cases"
                     sh "mvn test"
                 }
@@ -45,16 +43,16 @@ pipeline{
                 }
             }
         }
-        stage('package'){
+        stage('package') {
             agent any
-            steps{
-                script{
+            steps {
+                script {
                     sshagent(['remoteuser']) {
-                    //echo "Package the Code"
-                    //echo "Packing the code version ${params.APPVERSION}"
-                    sh "scp -o StrictHostKeyChecking=no server_cfg.sh ${remote1}:/home/ec2-user"
-                    sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash ~/server_cfg.sh'"
-                     }
+                        echo "Package the Code"
+                        echo "Packing the code version ${params.APPVERSION}"
+                        sh "scp -o StrictHostKeyChecking=no server_cfg.sh ${remote1}:/home/ec2-user"
+                        sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash ~/server_cfg.sh'"
+                    }
                 }
             }
         }
