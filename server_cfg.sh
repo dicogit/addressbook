@@ -7,8 +7,8 @@ then
     echo "clone exist"
     echo "go to addressbook"
     cd /home/ec2-user/addressbook
-    echo "pipe branch"
-    git checkout pipe
+    echo "pipe pull"
+    git pull origin pipe
 else
     git clone https://github.com/dicogit/addressbook.git
     echo "go to addressbook"
@@ -18,5 +18,5 @@ else
 fi
 #sudo cd /home/ec2-user/addressbook
 #git checkout pipe
-sudo mvn package
+mvn package
 
