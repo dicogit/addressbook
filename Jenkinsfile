@@ -4,7 +4,8 @@ pipeline {
         maven 'slave'
     }
     environment {
-        remote1="ec2-user@65.2.184.100"
+        remote1="ec2-user@65.1.94.247"
+       // remote1="ec2-user@65.2.184.100"
     }
     parameters {
         string (name:'Env', defaultValue:'Linux', description:'Linux Env')
