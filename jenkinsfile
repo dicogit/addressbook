@@ -14,7 +14,7 @@ pipeline {
         stage ('Compile') {
             steps { 
                 script {
-                    echo "Welcome to COMPILE STAGE : ${param.Env}"
+                    echo "Welcome to COMPILE STAGE : ${params.Env}"
                     sh 'mvn compile'
                 }
             }
