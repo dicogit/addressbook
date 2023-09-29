@@ -1,7 +1,10 @@
 pipeline {
-    agent none
+    agent any
     tools {
         maven 'slave'
+    }
+    environment {
+        remote1 'ec2-user@65.1.134.187'
     }
     parameters {
         string(name:'Env', defaultValue:'Linux', description:"Linu Environment")
@@ -9,18 +12,18 @@ pipeline {
         choice(name:'poll', choices:[7,8,9], description:'choose')
     }
     stages {
-        //stage ('Compile') {
-        //    steps { 
-        //        script {
-        //            echo "Welcome to COMPILE STAGE : ${params.Env}"
-        //            sh 'mvn compile'
-        //        }
-        //    }
-        //}
-        stage ('Test') {
-            agent {
-                label 'worker1'
+        stage ('Compile') {
+            steps { 
+                script {
+                    echo "Welcome to COMPILE STAGE : ${params.Env}"
+                    sh 'mvn compile'
                 }
+            }
+        }
+        stage ('Test') {
+            //agent {
+            //    label 'worker1'
+            //   }
             when {
                     expression {
                         params.polar == true
@@ -35,6 +38,19 @@ pipeline {
             post {
                 always {
                     junit 'target/surefire-reports/*.xml'
+                }
+            }
+        }
+        stage ('Package') {
+            steps { 
+                script {
+                    sshagent(['remoteuser']) {
+                        echo "Welcome to PACKAGE STAGE : ${params.Env}"
+                        sh "scp -o StrictHostKeyChecking=no server_cfg.sh ${remote1}:/home/ec2-user"
+                        sh "ssh -o StrickHostKeyChecking=no ${remote1} 'bash ~/server_cfg.sh'"
+
+                    }
+                    
                 }
             }
         }
