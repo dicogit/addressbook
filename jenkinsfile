@@ -1,60 +1,63 @@
-pipeline {
-    agent any
-    tools {
+pipeline{
+    agent none
+
+    tools{
         jdk 'java8'
         maven 'slave'
     }
+    // parameters{
+    //     string(name:'Env',defaultValue:'Test',description:'env to deploy')
+    //     booleanParam(name:'executeTests',defaultValue: true,description:'decide to run tc')
+    //     choice(name:'APPVERSION',choices:['1.1','1.2','1.3'])
+    // }
     environment {
         remote1="ec2-user@65.1.134.187"
     }
-    parameters {
-        string(name:'Env', defaultValue:'Linux', description:"Linu Environment")
-        booleanParam(name:'polar', defaultValue:true, description: 'contional')
-        choice(name:'poll', choices:[7,8,9], description:'choose')
-    }
-    stages {
-        stage ('Compile') {
-            steps { 
-                script {
-                    echo "Welcome to COMPILE STAGE : ${params.Env}"
-                    sh 'mvn compile'
+
+    stages{
+        stage('compile'){
+            agent any
+            steps{
+                script{
+                   echo "Compile the Code"
+                    //echo "Deploying to env: ${params.Env}"
+                    sh "mvn compile"
                 }
             }
         }
-        stage ('Test') {
-            //agent {
-            //    label 'worker1'
-            //   }
-            when {
-                    expression {
-                        params.polar == true
-                    }
-            }   
-            steps { 
-                script {
-                    echo "Welcome to TEST STAGE : ${params.Env}"
-                    sh 'mvn test'
+        stage('UnitTest'){
+             agent any
+            //agent any
+            // when{
+            //     expression{
+            //         params.executeTests == true
+            //     }
+            // }
+            steps{
+                script{
+                    echo "Run the UnitTest Cases"
+                    sh "mvn test"
                 }
             }
             post {
-                always {
+                always{
                     junit 'target/surefire-reports/*.xml'
                 }
             }
         }
-        stage ('Package') {
+        stage('package'){
             agent any
-            steps { 
-                script {
+            steps{
+                script{
                     sshagent(['remoteuser']) {
-                        echo "Welcome to PACKAGE STAGE : ${params.Env}"
-                        sh "scp -o StrictHostKeyChecking=no server_cfg.sh ${remote1}:/home/ec2-user"
-                        sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash ~/server_cfg.sh'"
-
-                    }
-                    
+                    //echo "Package the Code"
+                    //echo "Packing the code version ${params.APPVERSION}"
+                    sh "scp -o StrictHostKeyChecking=no server-config.sh ${remote1}:/home/ec2-user"
+                    sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash ~/server-config.sh'"
+                     }
                 }
             }
         }
+         
     }
 }
