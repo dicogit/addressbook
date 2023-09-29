@@ -11,13 +11,33 @@ pipeline {
         choice(name:'poll', choices:[7,8,9], description:'choose')
     }
     stages {
-        stage ('Compile') {
+        //stage ('Compile') {
+        //    steps { 
+        //        script {
+        //            echo "Welcome to COMPILE STAGE : ${params.Env}"
+        //            sh 'mvn compile'
+        //        }
+        //    }
+        //}
+        stage ('Test') {
             steps { 
+                when {
+                    expression {
+                        params.polar == true
+                    }
+                }
                 script {
-                    echo "Welcome to COMPILE STAGE : ${params.Env}"
-                    sh 'mvn compile'
+                    echo "Welcome to TEST STAGE : ${params.Env}"
+                    sh 'mvn test'
                 }
             }
         }
+    post {
+        always {
+            junit 'target/surefire-reports/*.xml'
+            }
+        }
+
     }
+        
 }
