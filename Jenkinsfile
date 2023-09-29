@@ -29,7 +29,7 @@ pipeline {
             steps {
                 script {
                     echo "TEST STAGE at ${params.Env}"
-                    sh 'mvn compile'
+                    sh 'mvn test'
                 }
             }
             post {
