@@ -5,15 +5,18 @@ sudo git clone https://github.com/dicogit/addressbook.git
 if [ -d "addressbook" ];
 then
     echo "clone exist"
+    echo "go to addressbook"
     cd /home/ec2-user/addressbook
-    git pull origin pipe
+    echo "pipe branch"
     git checkout pipe
 else
     git clone https://github.com/dicogit/addressbook.git
+    echo "go to addressbook"
     cd /home/ec2-user/addressbook
+    echo "pipe branch"
     git checkout pipe
 fi
-sudo cd /home/ec2-user/addressbook
+#sudo cd /home/ec2-user/addressbook
 #git checkout pipe
 sudo mvn package
 
