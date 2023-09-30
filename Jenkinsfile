@@ -6,6 +6,7 @@ pipeline {
     environment {
         remote1="ec2-user@65.1.94.247"
        // remote1="ec2-user@65.2.184.100"
+        REPONAME='devopsdr/pvt'
     }
     parameters {
         string (name:'Env', defaultValue:'Linux', description:'Linux Env')
@@ -44,13 +45,33 @@ pipeline {
                 sshagent(['remoteuser']) {
                     script {
                         echo "PACKAGE STAGE at ${params.Env}"
-                        sh "scp -o StrictHostKeyChecking=no server_cfg.sh ${remote1}:/home/ec2-user/"
-                        sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash ~/server_cfg.sh'"
+                        withCredentials([usernamePassword(credentialsId: 'ec43b4ea-f666-415c-aabd-ccde3a4b1e38', passwordVariable: 'pwd', usernameVariable: 'usr')]) {
+                            sh "scp -o StrictHostKeyChecking=no server_cfg.sh ${remote1}:/home/ec2-user/"
+                            sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash ~/server_cfg.sh ${REPONAME} ${BUILD_NUMBER}'"
+                            sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash docker login -u ${usr} ${pwd}'"
+                            sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash docker push ${REPONAME}:${BUILD_NUMBER}"
+    
+                        }
+                        
+                        
                     }
 
                 }
                 
             }
         }
+        //stage ('DEPLOY') {
+        //    steps {
+        //        sshagent(['remoteuser2']) {
+        //            script {
+        //                echo "DEPLOY STAGE at ${params.Env}"
+        //                sh "scp -o StrictHostKeyChecking=no server_cfg.sh ${remote1}:/home/ec2-user/"
+        //                sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash ~/server_cfg.sh'"
+        //            }
+
+        //        }
+                
+        //    }
     }
+    
 }

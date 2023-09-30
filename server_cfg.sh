@@ -1,6 +1,8 @@
 sudo yum install java-1.8.0-openjdk-devel -y
 sudo yum install git -y
 sudo yum install maven -y
+sudo yum install docker -y
+sudo systemctl start docker
 if [ -d "addressbook" ];
 then
     echo "repo is cloned and exists"
@@ -13,3 +15,5 @@ else
     git checkout pipe
 fi
 mvn package
+sudo cp /home/ec2-user/addressbook/target/addressbook.war /home/ec2-user/addressbook/
+sudo docker build -t $1:$2 cd /home/ec2-user/addressbook/
