@@ -48,7 +48,7 @@ pipeline {
                         withCredentials([usernamePassword(credentialsId: 'ec43b4ea-f666-415c-aabd-ccde3a4b1e38', passwordVariable: 'pwd', usernameVariable: 'usr')]) {
                             sh "scp -o StrictHostKeyChecking=no server_cfg.sh ${remote1}:/home/ec2-user/"
                             sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash ~/server_cfg.sh ${REPONAME} ${BUILD_NUMBER}'"
-                            sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash docker login -u ${usr} ${pwd}'"
+                            sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash sudo docker login -u ${usr} ${pwd}'"
                         //    sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash docker push ${REPONAME}:${BUILD_NUMBER}"
     
                         }
