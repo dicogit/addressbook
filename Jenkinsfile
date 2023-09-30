@@ -42,8 +42,8 @@ pipeline {
         }
         stage ('PACKAGE') {
             steps {
-                sshagent(['remoteuser']) {
-                    script {
+                script {
+                    sshagent(['remoteuser']) {
                         echo "PACKAGE STAGE at ${params.Env}"
                         withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dpwd', usernameVariable: 'docr')]) {
                             sh "scp -o StrictHostKeyChecking=no server_cfg.sh ${remote1}:/home/ec2-user/"
