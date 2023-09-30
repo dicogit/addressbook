@@ -5,7 +5,7 @@ pipeline {
     }
     environment {
         remote1="ec2-user@65.0.110.118"
-       // remote1="ec2-user@65.0.110.118"
+        remote2="ec2-user@43.205.125.106"
         REPONAME='devopsdr/pvt'
     }
     parameters {
