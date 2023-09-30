@@ -4,7 +4,7 @@ pipeline {
         maven 'slave'
     }
     environment {
-        remote1="ec2-user@65.1.94.247"
+        remote1="ec2-user@65.0.110.118"
        // remote1="ec2-user@65.0.110.118"
         REPONAME='devopsdr/pvt'
     }
