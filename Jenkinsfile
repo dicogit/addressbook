@@ -49,7 +49,7 @@ pipeline {
                             sh "scp -o StrictHostKeyChecking=no server_cfg.sh ${remote1}:/home/ec2-user/"
                             sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash ~/server_cfg.sh ${REPONAME} ${BUILD_NUMBER}'"
                             sh "ssh -o StrictHostKeyChecking=no ${remote1} 'sudo docker login -u ${docr} -p ${dpwd}'"
-                            sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash sudo docker push ${REPONAME}:${BUILD_NUMBER}'"
+                            sh "ssh -o StrictHostKeyChecking=no ${remote1} 'sudo docker push ${REPONAME}:${BUILD_NUMBER}'"
     
                         }
                                     
