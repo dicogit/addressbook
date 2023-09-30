@@ -52,8 +52,7 @@ pipeline {
                         //    sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash docker push ${REPONAME}:${BUILD_NUMBER}"
     
                         }
-                        
-                        
+                                    
                     }
 
                 }
