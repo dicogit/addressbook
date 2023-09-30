@@ -5,7 +5,7 @@ pipeline {
     }
     environment {
         remote1="ec2-user@65.1.94.247"
-       // remote1="ec2-user@65.2.184.100"
+       // remote1="ec2-user@65.0.110.118"
         REPONAME='devopsdr/pvt'
     }
     parameters {
@@ -49,7 +49,7 @@ pipeline {
                             sh "scp -o StrictHostKeyChecking=no server_cfg.sh ${remote1}:/home/ec2-user/"
                             sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash ~/server_cfg.sh ${REPONAME} ${BUILD_NUMBER}'"
                             sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash docker login -u ${usr} ${pwd}'"
-                            sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash docker push ${REPONAME}:${BUILD_NUMBER}"
+                        //    sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash docker push ${REPONAME}:${BUILD_NUMBER}"
     
                         }
                         
