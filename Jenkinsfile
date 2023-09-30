@@ -48,7 +48,7 @@ pipeline {
                         withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dpwd', usernameVariable: 'docr')]) {
                             sh "scp -o StrictHostKeyChecking=no server_cfg.sh ${remote1}:/home/ec2-user/"
                             sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash ~/server_cfg.sh ${REPONAME} ${BUILD_NUMBER}'"
-                            sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash sudo docker login -u ${docr} -p ${dpwd}'"
+                            sh "ssh  ${remote1} 'bash docker login -u ${docr} -p ${dpwd}'"
                             sh "ssh -o StrictHostKeyChecking=no ${remote1} 'bash sudo docker push ${REPONAME}:${BUILD_NUMBER}'"
     
                         }
@@ -72,6 +72,7 @@ pipeline {
                     script {
                         echo "DEPLOY STAGE at ${params.Env}"
                         sh "ssh -o StrictHostKeyChecking=no ${remote2} 'bash sudo yum install docker -y'"
+                        sh "ssh -o StrictHostKeyChecking=no ${remote2} 'bash sudo systemctl start docker'"
                         sh "ssh -o StrictHostKeyChecking=no ${remote2} 'bash sudo docker pull ${REPONAME}:${BUILD_NUMBER}'"
                         sh "ssh -o StrictHostKeyChecking=no ${remote2} 'bash sudo docker run -itd -P ${REPONAME}:${BUILD_NUMBER}'"
                     }
