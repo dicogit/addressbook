@@ -16,4 +16,4 @@ else
 fi
 mvn package
 sudo cp /home/ec2-user/addressbook/target/addressbook.war /home/ec2-user/addressbook/
-sudo docker build -t $1:$2 cd /home/ec2-user/addressbook/
+sudo docker build -t $1:$2 /home/ec2-user/addressbook/
