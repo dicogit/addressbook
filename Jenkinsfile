@@ -4,8 +4,8 @@ pipeline {
         maven 'slave'
     }
     environment {
-        remote1="ec2-user@65.0.110.118"
-        remote2="ec2-user@43.205.125.106"
+        remote1="ec2-user@13.233.65.111"
+        remote2="ec2-user@43.204.107.107"
         REPONAME='devopsdr/pvt'
     }
     parameters {
@@ -68,13 +68,13 @@ pipeline {
                 }
             }
             steps {
-                sshagent(['remoteuser2']) {
+                sshagent(['remoteuser']) {
                     script {
                         echo "DEPLOY STAGE at ${params.Env}"
                         sh "ssh -o StrictHostKeyChecking=no ${remote2} 'bash sudo yum install docker -y'"
                         sh "ssh -o StrictHostKeyChecking=no ${remote2} 'bash sudo systemctl start docker'"
-                        sh "ssh -o StrictHostKeyChecking=no ${remote2} 'bash sudo docker pull ${REPONAME}:${BUILD_NUMBER}'"
-                        sh "ssh -o StrictHostKeyChecking=no ${remote2} 'bash sudo docker run -itd -P ${REPONAME}:${BUILD_NUMBER}'"
+                        sh "ssh -o StrictHostKeyChecking=no ${remote2} 'sudo docker pull ${REPONAME}:${BUILD_NUMBER}'"
+                        sh "ssh -o StrictHostKeyChecking=no ${remote2} 'sudo docker run -itd -P ${REPONAME}:${BUILD_NUMBER}'"
                     }
 
                 }
