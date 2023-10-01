@@ -71,10 +71,15 @@ pipeline {
                 sshagent(['remoteuser']) {
                     script {
                         echo "DEPLOY STAGE at ${params.Env}"
-                        sh "ssh -o StrictHostKeyChecking=no ${remote2} 'sudo yum install docker -y'"
-                        sh "ssh -o StrictHostKeyChecking=no ${remote2} 'sudo systemctl start docker'"
-                        sh "ssh -o StrictHostKeyChecking=no ${remote2} 'sudo docker pull ${REPONAME}:${BUILD_NUMBER}'"
-                        sh "ssh -o StrictHostKeyChecking=no ${remote2} 'sudo docker run -itd -P ${REPONAME}:${BUILD_NUMBER}'"
+                        withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dpwd', usernameVariable: 'docr')]) { 
+                            sh "ssh -o StrictHostKeyChecking=no ${remote2} 'sudo yum install docker -y'"
+                            sh "ssh -o StrictHostKeyChecking=no ${remote2} 'sudo systemctl start docker'"
+                            sh "ssh -o StrictHostKeyChecking=no ${remote1} 'sudo docker login -u ${docr} -p ${dpwd}'"
+                            sh "ssh -o StrictHostKeyChecking=no ${remote2} 'sudo docker pull ${REPONAME}:${BUILD_NUMBER}'"
+                            sh "ssh -o StrictHostKeyChecking=no ${remote2} 'sudo docker run -itd -P ${REPONAME}:${BUILD_NUMBER}'"
+
+                        }
+                        
                     }
 
                 }
