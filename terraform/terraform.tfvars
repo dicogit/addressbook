@@ -1,0 +1,5 @@
+instance_type = "t2.micro"
+az = "ap-south-1b"
+env = "dev"
+subnet_cidr_block = "10.5.1.0/28"
+vpc_cidr_block = "10.5.0.0/16"
