@@ -5,6 +5,12 @@ terraform {
             version = "5.21.0"
         }
     }
+    backend "s3" {
+        bucket = "tfbkp"
+        key = "terraform-sf"
+        region = "ap-south-1"
+        dynamodb_table = "tfbkp-tbl"
+    }
 }
 
 provider "aws" {
