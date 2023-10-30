@@ -68,7 +68,7 @@ pipeline {
                         sh "terraform plan"
                         EC2_PUBLIC_IP=sh(
                             script: "terraform output ectype"
-                            returnStdout: true
+                            //returnStdout: true
                         ).trim()
                     }
                 }
