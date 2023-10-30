@@ -69,10 +69,8 @@ pipeline {
                     dir ("terraform") {
                         sh "terraform init"
                         sh "terraform plan"
-                        EC2_PUBLIC_IP=sh(
-                            script: "terraform output ec2"
-                            returnStdout: true
-                        ).trim()
+                        EC2_PUBLIC_IP=sh(returnStdout: true, script: "terraform output ec2").trim()
+                        echo "EC2_PUBLIC_IP: '${EC2_PUBLIC_IP}'"
                     }
                 }
             }
