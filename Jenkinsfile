@@ -60,6 +60,7 @@ pipeline {
             }
         }
         stage ("TF Creating EC2") {
+            agent any
             steps {
                 script {
                     dir ("terraform") {
