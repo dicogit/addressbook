@@ -1,3 +1,3 @@
 output "ip" {
-    value = module.myown-instance.ectype[0].public_ip
+    value = module.myown-instance.ectype.public_ip
 }
