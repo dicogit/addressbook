@@ -1,3 +1,3 @@
-output "ec2" {
+output "ectype" {
     value = aws_instance.tfweb
 }
