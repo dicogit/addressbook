@@ -60,15 +60,15 @@ pipeline {
             }
         }
         stage ("TF Creating EC2") {
-           // environment {
-           //     AWS_ACCESS_KEY_ID=credentials("AWS_ACCESS_KEY_ID")
-           //     AWS_SECRET_ACCESS_KEY=credentials("AWS_SECRET_ACCESS_KEY")
-            //}
+            environment {
+                AWS_ACCESS_KEY_ID=credentials("AWS_ACCESS_KEY_ID")
+                AWS_SECRET_ACCESS_KEY=credentials("AWS_SECRET_ACCESS_KEY")
+            }
             steps {
                 script {
                     dir ("terraform") {
                         sh "terraform init"
-                        sh "terraform plan"
+                        sh "terraform apply --auto-approve"
                         EC2_PUBLIC_IP=sh(returnStdout: true, script: "terraform output ec2").trim()
                         echo "EC2_PUBLIC_IP: '${EC2_PUBLIC_IP}'"
                     }
