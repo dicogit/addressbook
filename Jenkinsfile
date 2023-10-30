@@ -4,8 +4,8 @@ pipeline {
         maven 'slave'
     }
     environment {
-        remote1="ec2-user@13.233.65.111"
-        remote2="ec2-user@43.204.107.107"
+        remote1="ec2-user@3.110.208.200"
+        //remote2="ec2-user@43.204.107.107"
         REPONAME='devopsdr/pvt'
     }
     parameters {
@@ -59,6 +59,20 @@ pipeline {
                 
             }
         }
+        stage ("TF Creating EC2") {
+            steps {
+                script {
+                    dir ("terraform") {
+                        sh "terraform init"
+                        sh "terraform plan"
+                        EC2_PUBLIC_IP=sh (
+                            script: "terraform output ectype"
+                            returnStdout: true
+                        ).trim()
+                    }
+                }
+            }
+        }
         stage ('DEPLOY') {
             input {
                 message 'Run Addressbook Application'
@@ -72,11 +86,11 @@ pipeline {
                     script {
                         echo "DEPLOY STAGE at ${params.Env}"
                         withCredentials([usernamePassword(credentialsId: 'dockerhub', passwordVariable: 'dpwd', usernameVariable: 'docr')]) { 
-                            sh "ssh -o StrictHostKeyChecking=no ${remote2} 'sudo yum install docker -y'"
-                            sh "ssh -o StrictHostKeyChecking=no ${remote2} 'sudo systemctl start docker'"
-                            sh "ssh -o StrictHostKeyChecking=no ${remote2} 'sudo docker login -u ${docr} -p ${dpwd}'"
-                            sh "ssh -o StrictHostKeyChecking=no ${remote2} 'sudo docker pull ${REPONAME}:${BUILD_NUMBER}'"
-                            sh "ssh -o StrictHostKeyChecking=no ${remote2} 'sudo docker run -itd -P ${REPONAME}:${BUILD_NUMBER}'"
+                            sh "ssh -o StrictHostKeyChecking=no ec2-user@${EC2_PUBLIC_IP} 'sudo yum install docker -y'"
+                            sh "ssh -o StrictHostKeyChecking=no ec2-user@${EC2_PUBLIC_IP} 'sudo systemctl start docker'"
+                            sh "ssh -o StrictHostKeyChecking=no ec2-user@${EC2_PUBLIC_IP} 'sudo docker login -u ${docr} -p ${dpwd}'"
+                            sh "ssh -o StrictHostKeyChecking=no ec2-user@${EC2_PUBLIC_IP} 'sudo docker pull ${REPONAME}:${BUILD_NUMBER}'"
+                            sh "ssh -o StrictHostKeyChecking=no ec2-user@${EC2_PUBLIC_IP} 'sudo docker run -itd -P ${REPONAME}:${BUILD_NUMBER}'"
 
                         }
                         
