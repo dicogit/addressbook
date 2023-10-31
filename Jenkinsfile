@@ -4,7 +4,7 @@ pipeline {
         maven 'slave'
     }
     environment {
-        remote1="ec2-user@3.110.208.200"
+        remote1="ec2-user@3.109.154.229"
         //remote2="ec2-user@43.204.107.107"
         REPONAME='devopsdr/pvt'
     }
@@ -67,9 +67,9 @@ pipeline {
             steps {
                 script {
                     dir ("terraform") {
-                        sh "terraform init"
+                        sh "terraform init -reconfigure"
                         sh "terraform apply --auto-approve"
-                        EC2_PUBLIC_IP=sh(returnStdout: true, script: "terraform output ectype").trim()
+                        EC2_PUBLIC_IP=sh(returnStdout: true, script: "terraform output ip").trim()
                         echo "EC2_PUBLIC_IP: '${EC2_PUBLIC_IP}'"
                     }
                 }
