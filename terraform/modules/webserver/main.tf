@@ -29,7 +29,7 @@ resource "aws_security_group" "tfsg" {
 
   ingress {
   description      = "HTTP"
-  from_port        =  8080
+  from_port        = 8080
   to_port          = 8080
   protocol         = "tcp"
   cidr_blocks      = ["0.0.0.0/0"]
@@ -56,7 +56,7 @@ resource "aws_instance" "tfweb" {
   subnet_id = var.subnet_id
   vpc_security_group_ids = [aws_security_group.tfsg.id]
   key_name = "devops"
-  user_data = file("userdata_script.sh")
+  #user_data = file("userdata_script.sh")
   tags = {
     Name = "${var.env}-${count.index}"
   }  
